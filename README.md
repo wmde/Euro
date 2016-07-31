@@ -1,6 +1,6 @@
 # Euro
 
-[![Build Status](https://secure.travis-ci.org/WMDE/Euro.png?branch=master)](http://travis-ci.org/WMDE/Euro)
+[![Build Status](https://secure.travis-ci.org/wmde/Euro.png?branch=master)](http://travis-ci.org/wmde/Euro)
 [![Latest Stable Version](https://poser.pugx.org/wmde/euro/version.png)](https://packagist.org/packages/wmde/euro)
 [![Download count](https://poser.pugx.org/wmde/euro/d/total.png)](https://packagist.org/packages/wmde/euro)
 
