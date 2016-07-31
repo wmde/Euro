@@ -1,6 +1,6 @@
 {
 	"name": "jeroen/generic-decorator",
-	"description": "",
+	"description": "Value object for representing a positive amount of Euro",
 	"homepage": "https://github.com/wmde/Euro",
 	"license": "GPL-2.0+",
 	"require": {
