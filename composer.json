@@ -1,5 +1,5 @@
 {
-	"name": "jeroen/generic-decorator",
+	"name": "wmde/euro",
 	"description": "Value object for representing a positive amount of Euro",
 	"homepage": "https://github.com/wmde/Euro",
 	"license": "GPL-2.0+",
