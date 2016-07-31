@@ -1,0 +1,41 @@
+{
+	"name": "jeroen/generic-decorator",
+	"description": "",
+	"homepage": "https://github.com/wmde/Euro",
+	"license": "GPL-2.0+",
+	"require": {
+		"php": ">=7.0"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "~2.5",
+		"mediawiki/mediawiki-codesniffer": "~0.6.0",
+		"ockcyp/covers-validator": "~0.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"WMDE\\Euro\\": "src/"
+		}
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "0.1.x-dev"
+		}
+	},
+	"scripts": {
+		"ci": [
+			"@test",
+			"@cs"
+		],
+		"test": [
+			"composer validate --no-interaction",
+			"vendor/bin/covers-validator",
+			"vendor/bin/phpunit"
+		],
+		"cs": [
+			"@phpcs"
+		],
+		"phpcs": [
+			"vendor/bin/phpcs src/ tests/ --standard=phpcs.xml --extensions=php -sp"
+		]
+	}
+}
