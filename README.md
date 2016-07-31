@@ -8,6 +8,6 @@ Value object for representing a positive amount of Euro.
 
 ## Release notes
 
-### 0.1.0 (2016-07-31)
+### 1.0.0 (2016-07-31)
 
 * Initial release
