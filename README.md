@@ -6,7 +6,7 @@
 [![Latest Stable Version](https://poser.pugx.org/wmde/euro/version.png)](https://packagist.org/packages/wmde/euro)
 [![Download count](https://poser.pugx.org/wmde/euro/d/total.png)](https://packagist.org/packages/wmde/euro)
 
-Value object for representing a positive amount of Euro.
+[Value Object](https://en.wikipedia.org/wiki/Value_object) that represents a positive amount of Euro.
 
 ## Release notes
 
