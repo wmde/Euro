@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace WMDE\Euro\Tests\Unit;
 
+use PHPUnit\Framework\TestCase;
 use WMDE\Euro\Euro;
 
 /**
@@ -12,7 +13,7 @@ use WMDE\Euro\Euro;
  * @license GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class EuroTest extends \PHPUnit_Framework_TestCase {
+class EuroTest extends TestCase {
 
 	/**
 	 * @dataProvider unsignedIntegerProvider
