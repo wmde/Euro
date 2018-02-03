@@ -2,7 +2,7 @@
 	"name": "wmde/euro",
 	"description": "Value object for representing a positive amount of Euro",
 	"homepage": "https://github.com/wmde/Euro",
-	"license": "GPL-2.0+",
+	"license": "GPL-2.0-or-later",
 	"require": {
 		"php": ">=7.0"
 	},
