@@ -54,9 +54,7 @@ final class Euro {
 			throw new InvalidArgumentException( 'Not a number' );
 		}
 
-		return new self( intval(
-			round( $euroAmount, self::$DECIMAL_COUNT ) * self::$CENTS_PER_EURO
-		) );
+		return self::newFromFloat( (float) $euroAmount );
 	}
 
 	/**
@@ -70,7 +68,10 @@ final class Euro {
 	 */
 	public static function newFromFloat( float $euroAmount ) {
 		return new self( intval(
-			round( $euroAmount, self::$DECIMAL_COUNT ) * self::$CENTS_PER_EURO
+			round(
+				round( $euroAmount, self::$DECIMAL_COUNT ) * self::$CENTS_PER_EURO,
+				0
+			)
 		) );
 	}
 

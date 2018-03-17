@@ -132,6 +132,7 @@ class EuroTest extends TestCase {
 		$this->assertSame( 102, Euro::newFromString( '1.015' )->getEuroCents() );
 		$this->assertSame( 102, Euro::newFromString( '1.019' )->getEuroCents() );
 		$this->assertSame( 102, Euro::newFromString( '1.0199999' )->getEuroCents() );
+		$this->assertSame( 870, Euro::newFromString( '8.70' )->getEuroCents() );
 	}
 
 	public function testGivenNegativeAmountString_exceptionIsThrown() {
@@ -184,6 +185,7 @@ class EuroTest extends TestCase {
 		$this->assertSame( 102, Euro::newFromFloat( 1.015 )->getEuroCents() );
 		$this->assertSame( 102, Euro::newFromFloat( 1.019 )->getEuroCents() );
 		$this->assertSame( 102, Euro::newFromFloat( 1.0199999 )->getEuroCents() );
+		$this->assertSame( 870, Euro::newFromFloat( 8.70 )->getEuroCents() );
 	}
 
 	public function testZeroEuroIntegers_isZeroCents() {
