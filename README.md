@@ -18,7 +18,7 @@ Euro 1.x:
 ```json
 {
     "require": {
-        "wmde/euro": "~1.0"
+        "wmde/euro": "^1.0.1"
     }
 }
 ```
@@ -95,6 +95,10 @@ For a full CI run
 	composer ci
 
 ## Release notes
+
+### 1.0.1 (2018-03-17)
+
+* Fixed rounding issue
 
 ### 1.0.0 (2016-07-31)
 
