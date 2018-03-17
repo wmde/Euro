@@ -27,7 +27,8 @@ class EuroErisTest extends TestCase {
 	}
 
 	public function testGetCentsReturnsConstructorArgument() {
-		$this->forAll( Generator\pos() )
+		$this->limitTo( 10000 )
+			->forAll( Generator\choose( 0, 100 * 100 ) )
 			->then( function( int $unsignedInteger ) {
 				$amount = Euro::newFromCents( $unsignedInteger );
 				$this->assertSame( $unsignedInteger, $amount->getEuroCents() );
@@ -35,10 +36,27 @@ class EuroErisTest extends TestCase {
 	}
 
 	public function testEquality() {
-		$this->forAll( Generator\pos() )
+		$this->limitTo( 10000 )
+			->forAll( Generator\choose( 0, 100 * 100 ) )
 			->then( function( int $unsignedInteger ) {
 				$amount = Euro::newFromCents( $unsignedInteger );
 				$this->assertTrue( $amount->equals( Euro::newFromCents( $unsignedInteger ) ) );
+			} );
+	}
+
+	public function testNewFromString() {
+		$this->limitTo( 10000 )
+			->forAll( Generator\choose( 0, 100 ), Generator\choose( 0, 99 ) )
+			->then( function( int $firstInt, int $secondInt ) {
+				$euroString =
+					(string)$firstInt
+					. '.'
+					. str_pad( (string)$secondInt, 2, '0', STR_PAD_LEFT );
+
+				$this->assertSame(
+					$firstInt * 100 + $secondInt,
+					Euro::newFromString( $euroString )->getEuroCents()
+				);
 			} );
 	}
 
