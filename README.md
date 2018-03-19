@@ -98,7 +98,7 @@ For a full CI run
 
 ### 1.0.1 (2018-03-17)
 
-* Fixed rounding issue
+* Fixed rounding issue occuring on some platforms
 
 ### 1.0.0 (2016-07-31)
 
