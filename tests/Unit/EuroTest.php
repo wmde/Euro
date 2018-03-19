@@ -123,6 +123,12 @@ class EuroTest extends TestCase {
 		$this->assertSame( 3133742, Euro::newFromString( '31337.42' )->getEuroCents() );
 	}
 
+	public function testEuroStringThatCausedRoundingError_doesNotCauseRoundingError() {
+		// Regression test for https://phabricator.wikimedia.org/T183481
+		$this->assertSame( 870, Euro::newFromString( '8.70' )->getEuroCents() );
+		$this->assertSame( 920, Euro::newFromString( '9.20' )->getEuroCents() );
+	}
+
 	public function testEuroStringWithRoundingError_getsRoundedAppropriately() {
 		$this->assertSame( 101, Euro::newFromString( '1.0100000001' )->getEuroCents() );
 		$this->assertSame( 101, Euro::newFromString( '1.010000009999' )->getEuroCents() );
@@ -132,7 +138,12 @@ class EuroTest extends TestCase {
 		$this->assertSame( 102, Euro::newFromString( '1.015' )->getEuroCents() );
 		$this->assertSame( 102, Euro::newFromString( '1.019' )->getEuroCents() );
 		$this->assertSame( 102, Euro::newFromString( '1.0199999' )->getEuroCents() );
-		$this->assertSame( 870, Euro::newFromString( '8.70' )->getEuroCents() );
+		$this->assertSame( 870, Euro::newFromString( '8.701' )->getEuroCents() );
+		$this->assertSame( 870, Euro::newFromString( '8.70499' )->getEuroCents() );
+		$this->assertSame( 871, Euro::newFromString( '8.705' )->getEuroCents() );
+		$this->assertSame( 871, Euro::newFromString( '8.705000' )->getEuroCents() );
+		$this->assertSame( 871, Euro::newFromString( '8.705001' )->getEuroCents() );
+		$this->assertSame( 871, Euro::newFromString( '8.709999' )->getEuroCents() );
 	}
 
 	public function testGivenNegativeAmountString_exceptionIsThrown() {
