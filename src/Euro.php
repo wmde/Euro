@@ -12,8 +12,8 @@ use InvalidArgumentException;
  */
 final class Euro {
 
-	private static $DECIMAL_COUNT = 2;
-	private static $CENTS_PER_EURO = 100;
+	private const DECIMAL_COUNT = 2;
+	private const CENTS_PER_EURO = 100;
 
 	private $cents;
 
@@ -59,22 +59,22 @@ final class Euro {
 		$euros = (int)$parts[0];
 		$cents = self::centsFromString( $parts[1] ?? '0' );
 
-		return new self( $euros * self::$CENTS_PER_EURO + $cents );
+		return new self( $euros * self::CENTS_PER_EURO + $cents );
 	}
 
 	private static function centsFromString( string $cents ): int {
-		if ( strlen( $cents ) > self::$DECIMAL_COUNT ) {
+		if ( strlen( $cents ) > self::DECIMAL_COUNT ) {
 			return self::roundCentsToInt( $cents );
 		}
 
 		// Turn .1 into .10, so it ends up as 10 cents
-		return (int)str_pad( $cents, self::$DECIMAL_COUNT, '0' );
+		return (int)str_pad( $cents, self::DECIMAL_COUNT, '0' );
 	}
 
 	private static function roundCentsToInt( string $cents ): int {
-		$centsInt = (int)substr( $cents, 0, self::$DECIMAL_COUNT );
+		$centsInt = (int)substr( $cents, 0, self::DECIMAL_COUNT );
 
-		if ( (int)$cents[self::$DECIMAL_COUNT] >= 5 ) {
+		if ( (int)$cents[self::DECIMAL_COUNT] >= 5 ) {
 			$centsInt++;
 		}
 
@@ -90,10 +90,10 @@ final class Euro {
 	 * @return self
 	 * @throws InvalidArgumentException
 	 */
-	public static function newFromFloat( float $euroAmount ) {
+	public static function newFromFloat( float $euroAmount ): self {
 		return new self( intval(
 			round(
-				round( $euroAmount, self::$DECIMAL_COUNT ) * self::$CENTS_PER_EURO,
+				round( $euroAmount, self::DECIMAL_COUNT ) * self::CENTS_PER_EURO,
 				0
 			)
 		) );
@@ -104,8 +104,8 @@ final class Euro {
 	 * @return self
 	 * @throws InvalidArgumentException
 	 */
-	public static function newFromInt( int $euroAmount ) {
-		return new self( $euroAmount * self::$CENTS_PER_EURO );
+	public static function newFromInt( int $euroAmount ): self {
+		return new self( $euroAmount * self::CENTS_PER_EURO );
 	}
 
 	public function getEuroCents(): int {
@@ -113,14 +113,14 @@ final class Euro {
 	}
 
 	public function getEuroFloat(): float {
-		return $this->cents / self::$CENTS_PER_EURO;
+		return $this->cents / self::CENTS_PER_EURO;
 	}
 
 	/**
 	 * Returns the euro amount as string with two decimals always present in format "42.00".
 	 */
 	public function getEuroString(): string {
-		return number_format( $this->getEuroFloat(), self::$DECIMAL_COUNT, '.', '' );
+		return number_format( $this->getEuroFloat(), self::DECIMAL_COUNT, '.', '' );
 	}
 
 	public function equals( Euro $euro ): bool {

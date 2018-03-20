@@ -106,4 +106,12 @@
     </rule>
 
     <rule ref="Zend.Files.ClosingTag" />
+
+    <rule ref="MediaWiki.WhiteSpace.DisallowEmptyLineFunctions">
+        <exclude name="MediaWiki.WhiteSpace.DisallowEmptyLineFunctions.NoEmptyLine" />
+    </rule>
+
+    <rule ref="MediaWiki.WhiteSpace.SpaceAfterClosure">
+        <exclude name="MediaWiki.WhiteSpace.SpaceAfterClosure.NoWhitespaceAfterClosure" />
+    </rule>
 </ruleset>
