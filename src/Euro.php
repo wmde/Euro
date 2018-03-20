@@ -54,10 +54,10 @@ final class Euro {
 			throw new InvalidArgumentException( 'Not a number' );
 		}
 
-		list( $euros, $cents ) = explode( '.', $euroAmount, 2 );
+		$parts = explode( '.', $euroAmount, 2 );
 
-		$euros = (int)$euros;
-		$cents = self::centsFromString( $cents ?? '0' );
+		$euros = (int)$parts[0];
+		$cents = self::centsFromString( $parts[1] ?? '0' );
 
 		return new self( $euros * self::$CENTS_PER_EURO + $cents );
 	}
