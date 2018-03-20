@@ -63,15 +63,18 @@ final class Euro {
 	}
 
 	private static function centsFromString( string $cents ): int {
-		$cents = str_pad( $cents, 2, '0' );
-
-		if ( strlen( $cents ) <= 2 ) {
-			return (int)$cents;
+		if ( strlen( $cents ) > self::$DECIMAL_COUNT ) {
+			return self::roundCentsToInt( $cents );
 		}
 
-		$centsInt = (int)substr( $cents, 0, 2 );
+		// Turn .1 into .10, so it ends up as 10 cents
+		return (int)str_pad( $cents, self::$DECIMAL_COUNT, '0' );
+	}
 
-		if ( (int)$cents[2] >= 5 ) {
+	private static function roundCentsToInt( string $cents ): int {
+		$centsInt = (int)substr( $cents, 0, self::$DECIMAL_COUNT );
+
+		if ( (int)$cents[self::$DECIMAL_COUNT] >= 5 ) {
 			$centsInt++;
 		}
 
