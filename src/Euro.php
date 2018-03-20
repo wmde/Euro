@@ -54,7 +54,31 @@ final class Euro {
 			throw new InvalidArgumentException( 'Not a number' );
 		}
 
-		return self::newFromFloat( (float) $euroAmount );
+		$parts = explode( '.', $euroAmount, 2 );
+
+		$euros = (int)$parts[0];
+		$cents = self::centsFromString( $parts[1] ?? '0' );
+
+		return new self( $euros * self::$CENTS_PER_EURO + $cents );
+	}
+
+	private static function centsFromString( string $cents ): int {
+		if ( strlen( $cents ) > self::$DECIMAL_COUNT ) {
+			return self::roundCentsToInt( $cents );
+		}
+
+		// Turn .1 into .10, so it ends up as 10 cents
+		return (int)str_pad( $cents, self::$DECIMAL_COUNT, '0' );
+	}
+
+	private static function roundCentsToInt( string $cents ): int {
+		$centsInt = (int)substr( $cents, 0, self::$DECIMAL_COUNT );
+
+		if ( (int)$cents[self::$DECIMAL_COUNT] >= 5 ) {
+			$centsInt++;
+		}
+
+		return $centsInt;
 	}
 
 	/**

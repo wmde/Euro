@@ -96,9 +96,13 @@ For a full CI run
 
 ## Release notes
 
+### 1.0.2 (2018-03-20)
+
+* Internal changes to avoid dealing with floats when constructing an Euro object from string
+
 ### 1.0.1 (2018-03-17)
 
-* Fixed rounding issue occuring on some platforms
+* Fixed rounding issue occurring on some platforms
 
 ### 1.0.0 (2016-07-31)
 
