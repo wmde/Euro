@@ -96,6 +96,10 @@ For a full CI run
 
 ## Release notes
 
+### 1.1.0 (2018-03-20)
+
+* Bumped minimum PHP version from 7.0 to 7.1
+
 ### 1.0.2 (2018-03-20)
 
 * Internal changes to avoid dealing with floats when constructing an Euro object from string
