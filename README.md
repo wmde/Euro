@@ -96,6 +96,10 @@ For a full CI run
 
 ## Release notes
 
+### 1.1.1 (dev)
+
+* Large numbers now cause an InvalidArgumentException rather than a TypeError
+
 ### 1.1.0 (2018-03-21)
 
 * Bumped minimum PHP version from 7.0 to 7.1

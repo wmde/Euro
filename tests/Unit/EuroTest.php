@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace WMDE\Euro\Tests\Unit;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use WMDE\Euro\Euro;
 
@@ -248,6 +249,51 @@ class EuroTest extends TestCase {
 
 	public function test9001centsDoesNotEqual9000cents() {
 		$this->assertFalse( Euro::newFromCents( 9001 )->equals( Euro::newFromCents( 9000 ) ) );
+	}
+
+	/**
+	 * @dataProvider tooLongStringProvider
+	 */
+	public function testNewFromStringThrowsExceptionWhenStringIsTooLong( string $string ) {
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( 'Number is too big' );
+
+		Euro::newFromString( $string );
+	}
+
+	public function tooLongStringProvider() {
+		yield [ '1111111111111111111111111111111' ];
+		yield [ (string)PHP_INT_MAX ];
+		yield [ substr( (string)PHP_INT_MAX, 0, -2 ) ];
+	}
+
+	public function testNewFromStringHandlesLongStrings() {
+		Euro::newFromString( substr( (string)PHP_INT_MAX, 0, -3 ) );
+		$this->assertTrue( true );
+	}
+
+	/**
+	 * @dataProvider tooHighIntegerProvider
+	 */
+	public function testNewFromIntThrowsExceptionWhenIntegerIsTooHigh( int $int ) {
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( 'Number is too big' );
+		Euro::newFromInt( $int );
+	}
+
+	public function tooHighIntegerProvider() {
+		yield [ PHP_INT_MAX ];
+		yield [ PHP_INT_MAX / 10 ];
+		yield [ PHP_INT_MAX / 100 ];
+	}
+
+	public function testNewFromIntHandlesBigIntegers() {
+		$number = (int)floor( PHP_INT_MAX / 101 );
+
+		$this->assertSame(
+			$number * 100,
+			Euro::newFromInt( $number )->getEuroCents()
+		);
 	}
 
 }
