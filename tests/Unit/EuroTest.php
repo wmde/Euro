@@ -273,7 +273,7 @@ class EuroTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider tooHighIntegerProvider
+	 * @dataProvider tooHighNumberProvider
 	 */
 	public function testNewFromIntThrowsExceptionWhenIntegerIsTooHigh( int $int ) {
 		$this->expectException( InvalidArgumentException::class );
@@ -281,13 +281,24 @@ class EuroTest extends TestCase {
 		Euro::newFromInt( $int );
 	}
 
-	public function tooHighIntegerProvider() {
+	public function tooHighNumberProvider() {
 		yield [ PHP_INT_MAX ];
 		yield [ PHP_INT_MAX / 10 ];
 		yield [ PHP_INT_MAX / 100 ];
 	}
 
+	/**
+	 * @dataProvider tooHighNumberProvider
+	 */
+	public function testNewFromFloatThrowsExceptionWhenFloatIsTooHigh( int $int ) {
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( 'Number is too big' );
+		Euro::newFromFloat( (float)$int );
+	}
+
 	public function testNewFromIntHandlesBigIntegers() {
+		// Edge case test for the highest allowed value (Euro::CENTS_PER_EURO +1 )
+		// 100 (Euro::CENTS_PER_EURO) does not work due to rounding
 		$number = (int)floor( PHP_INT_MAX / 101 );
 
 		$this->assertSame(
