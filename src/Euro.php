@@ -30,6 +30,13 @@ final class Euro {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function __toString(): string {
+		return $this->getEuroString();
+	}
+
+	/**
 	 * @param int $cents
 	 * @return self
 	 * @throws InvalidArgumentException
