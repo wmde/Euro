@@ -10,7 +10,7 @@ use InvalidArgumentException;
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-final class Euro {
+final class Euro implements \JsonSerializable {
 
 	private const DECIMAL_COUNT = 2;
 	private const CENTS_PER_EURO = 100;
@@ -33,6 +33,13 @@ final class Euro {
 	 * @return string
 	 */
 	public function __toString(): string {
+		return $this->getEuroString();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function jsonSerialize(): string {
 		return $this->getEuroString();
 	}
 

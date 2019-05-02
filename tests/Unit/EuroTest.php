@@ -96,6 +96,11 @@ class EuroTest extends TestCase {
 		$this->assertSame( '98.76', (string) $amount );
 	}
 
+	public function testGivenEuroAmount_jsonEncodeWillEncodeProperly() {
+		$amount = Euro::newFromCents( 9876 );
+		$this->assertSame( '"98.76"', json_encode( $amount ) );
+	}
+
 	public function testOneEuroString_getsTurnedInto100cents() {
 		$this->assertSame( 100, Euro::newFromString( '1.00' )->getEuroCents() );
 	}
