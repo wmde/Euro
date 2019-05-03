@@ -68,12 +68,20 @@ final class Euro implements \JsonSerializable {
 			throw new InvalidArgumentException( 'Not a number' );
 		}
 
+		if ( self::stringIsTooLong( $euroAmount ) ) {
+			throw new InvalidArgumentException( 'Number is too big' );
+		}
+
 		$parts = explode( '.', $euroAmount, 2 );
 
 		$euros = (int)$parts[0];
 		$cents = self::centsFromString( $parts[1] ?? '0' );
 
 		return new self( $euros * self::CENTS_PER_EURO + $cents );
+	}
+
+	private static function stringIsTooLong( string $euroString ): bool {
+		return strlen( $euroString ) + 2 > log10( PHP_INT_MAX );
 	}
 
 	private static function centsFromString( string $cents ): int {
@@ -105,6 +113,7 @@ final class Euro implements \JsonSerializable {
 	 * @throws InvalidArgumentException
 	 */
 	public static function newFromFloat( float $euroAmount ): self {
+		self::assertMaximumValueNotExceeded( $euroAmount );
 		return new self( intval(
 			round(
 				round( $euroAmount, self::DECIMAL_COUNT ) * self::CENTS_PER_EURO,
@@ -114,11 +123,25 @@ final class Euro implements \JsonSerializable {
 	}
 
 	/**
+	 * @param int|float $euroAmount
+	 */
+	private static function assertMaximumValueNotExceeded( $euroAmount ): void {
+		// When $euroAmount == PHP_INT_MAX / self::CENTS_PER_EURO, multiplying it
+		// by self::CENTS_PER_EURO still exceeds PHP_INT_MAX, which leads type errors
+		// due to float conversion. The safest thing to do here is using a safety
+		// margin of 1 with self::CENTS_PER_EURO
+		if ( $euroAmount > floor( PHP_INT_MAX / ( self::CENTS_PER_EURO + 1 ) ) ) {
+			throw new InvalidArgumentException( 'Number is too big' );
+		}
+	}
+
+	/**
 	 * @param int $euroAmount
 	 * @return self
 	 * @throws InvalidArgumentException
 	 */
 	public static function newFromInt( int $euroAmount ): self {
+		self::assertMaximumValueNotExceeded( $euroAmount );
 		return new self( $euroAmount * self::CENTS_PER_EURO );
 	}
 
