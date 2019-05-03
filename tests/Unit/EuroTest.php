@@ -91,7 +91,7 @@ class EuroTest extends TestCase {
 		$this->assertSame( '12.34', $amount->getEuroString() );
 	}
 
-	public function testGiven1234Cents_stringCastingReturns98euro76() {
+	public function testGiven9876Cents_stringCastingReturns98euro76() {
 		$amount = Euro::newFromCents( 9876 );
 		$this->assertSame( '98.76', (string) $amount );
 	}
