@@ -37,8 +37,8 @@ class EuroTest extends TestCase {
 		$this->assertNotSame( 0, $amount->getEuroFloat() );
 	}
 
-	private function assertExactFloat( float $expected, $actual ) {
-		$this->assertInternalType( 'float', $actual );
+	private function assertExactFloat( $expected, $actual ) {
+		$this->assertIsFloat( $actual );
 		$this->assertEquals( $expected, $actual, '', 0 );
 	}
 
@@ -293,8 +293,8 @@ class EuroTest extends TestCase {
 
 	public function tooHighNumberProvider() {
 		yield [ PHP_INT_MAX ];
-		yield [ PHP_INT_MAX / 10 ];
-		yield [ PHP_INT_MAX / 100 ];
+		yield [ (int)floor( PHP_INT_MAX / 10 ) ];
+		yield [ (int)floor( PHP_INT_MAX / 100 ) ];
 	}
 
 	/**
