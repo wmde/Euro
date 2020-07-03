@@ -11,7 +11,7 @@ use WMDE\Euro\Euro;
 /**
  * @covers \WMDE\Euro\Euro
  *
- * @license GNU GPL v2+
+ * @license GPL-2.0-or-later
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class EuroTest extends TestCase {
@@ -37,8 +37,8 @@ class EuroTest extends TestCase {
 		$this->assertNotSame( 0, $amount->getEuroFloat() );
 	}
 
-	private function assertExactFloat( float $expected, $actual ) {
-		$this->assertInternalType( 'float', $actual );
+	private function assertExactFloat( $expected, $actual ) {
+		$this->assertIsFloat( $actual );
 		$this->assertEquals( $expected, $actual, '', 0 );
 	}
 
@@ -94,7 +94,7 @@ class EuroTest extends TestCase {
 
 	public function testGiven9876Cents_stringCastingReturns98euro76() {
 		$amount = Euro::newFromCents( 9876 );
-		$this->assertSame( '98.76', (string) $amount );
+		$this->assertSame( '98.76', (string)$amount );
 	}
 
 	public function testGivenEuroAmount_jsonEncodeWillEncodeProperly() {
@@ -214,11 +214,12 @@ class EuroTest extends TestCase {
 		$this->assertSame( 0, Euro::newFromInt( 0 )->getEuroCents() );
 	}
 
-	public function testOneEuroIntegers_is100cents() {
+	public function testOneEuroIntegers_is100Cents() {
 		$this->assertSame( 100, Euro::newFromInt( 1 )->getEuroCents() );
 	}
 
-	public function test1337EuroIntegers_is133700cents() {
+	// phpcs:ignore MediaWiki.NamingConventions.LowerCamelFunctionsName.FunctionName
+	public function test1337EuroIntegers_is133700Cents() {
 		$this->assertSame( 133700, Euro::newFromInt( 1337 )->getEuroCents() );
 	}
 
@@ -293,8 +294,8 @@ class EuroTest extends TestCase {
 
 	public function tooHighNumberProvider() {
 		yield [ PHP_INT_MAX ];
-		yield [ PHP_INT_MAX / 10 ];
-		yield [ PHP_INT_MAX / 100 ];
+		yield [ (int)floor( PHP_INT_MAX / 10 ) ];
+		yield [ (int)floor( PHP_INT_MAX / 100 ) ];
 	}
 
 	/**

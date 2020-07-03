@@ -7,7 +7,7 @@ namespace WMDE\Euro;
 use InvalidArgumentException;
 
 /**
- * @licence GNU GPL v2+
+ * @license GPL-2.0-or-later
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 final class Euro implements \JsonSerializable {
@@ -155,6 +155,8 @@ final class Euro implements \JsonSerializable {
 
 	/**
 	 * Returns the euro amount as string with two decimals always present in format "42.00".
+	 *
+	 * @return string
 	 */
 	public function getEuroString(): string {
 		return number_format( $this->getEuroFloat(), self::DECIMAL_COUNT, '.', '' );
