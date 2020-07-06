@@ -15,7 +15,7 @@ final class Euro implements \JsonSerializable {
 	private const DECIMAL_COUNT = 2;
 	private const CENTS_PER_EURO = 100;
 
-	private $cents;
+	private int $cents;
 
 	/**
 	 * @param int $cents
