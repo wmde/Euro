@@ -153,6 +153,10 @@ final class Euro implements \JsonSerializable {
 		return $this->cents / self::CENTS_PER_EURO;
 	}
 
+	public function getEuros(): int {
+		return intval( $this->cents / self::CENTS_PER_EURO );
+	}
+
 	/**
 	 * Returns the euro amount as string with two decimals always present in format "42.00".
 	 *

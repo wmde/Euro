@@ -57,6 +57,29 @@ class EuroTest extends TestCase {
 		$this->assertExactFloat( 0.33, $amount->getEuroFloat() );
 	}
 
+	/**
+	 * @dataProvider getEurosDataProvider
+	 */
+	public function testGetEurosReturnsCorrectValues( int $cents, int $expectedEuros ) {
+		$amount = Euro::newFromCents( $cents );
+		$this->assertEquals( $expectedEuros, $amount->getEuros() );
+	}
+
+	public function getEurosDataProvider(): array {
+		return [
+			[ 0, 0 ],
+			[ 3, 0 ],
+			[ 102, 1 ],
+			[ 149, 1 ],
+			[ 150, 1 ],
+			[ 151, 1 ],
+			[ 199, 1 ],
+			[ 555, 5 ],
+			[ 1033, 10 ],
+			[ 9999, 99 ],
+		];
+	}
+
 	public function testGivenNegativeAmount_constructorThrowsException() {
 		$this->expectException( \InvalidArgumentException::class );
 		Euro::newFromCents( -1 );
