@@ -41,5 +41,10 @@
 		"fix-cs": [
 			"vendor/bin/phpcbf src/ tests/ --standard=phpcs.xml --extensions=php"
 		]
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
