@@ -8,4 +8,4 @@ composer.lock
 .phpunit.cache
 
 vendor/
-
+.idea
