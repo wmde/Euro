@@ -5,17 +5,15 @@ declare( strict_types = 1 );
 namespace WMDE\Euro\Tests\Unit;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use WMDE\Euro\Euro;
 
-/**
- * @covers \WMDE\Euro\Euro
- */
+#[CoversClass( Euro::class )]
 class EuroTest extends TestCase {
 
-	/**
-	 * @dataProvider unsignedIntegerProvider
-	 */
+	#[DataProvider( 'unsignedIntegerProvider' )]
 	public function testGetCentsReturnsConstructorArgument( int $unsignedInteger ): void {
 		$amount = Euro::newFromCents( $unsignedInteger );
 		$this->assertSame( $unsignedInteger, $amount->getEuroCents() );
@@ -57,9 +55,7 @@ class EuroTest extends TestCase {
 		$this->assertExactFloat( 0.33, $amount->getEuroFloat() );
 	}
 
-	/**
-	 * @dataProvider getEurosDataProvider
-	 */
+	#[DataProvider( 'getEurosDataProvider' )]
 	public function testGetEurosReturnsCorrectValues( int $cents, int $expectedEuros ): void {
 		$amount = Euro::newFromCents( $cents );
 		$this->assertEquals( $expectedEuros, $amount->getEuros() );
@@ -255,9 +251,9 @@ class EuroTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider euroProvider
 	 * @param Euro $euro
 	 */
+	#[DataProvider( 'euroProvider' )]
 	public function testEuroEqualsItself( Euro $euro ): void {
 		$this->assertTrue( $euro->equals( clone $euro ) );
 	}
@@ -291,9 +287,7 @@ class EuroTest extends TestCase {
 		$this->assertFalse( Euro::newFromCents( 9001 )->equals( Euro::newFromCents( 9000 ) ) );
 	}
 
-	/**
-	 * @dataProvider tooLongStringProvider
-	 */
+	#[DataProvider( 'tooLongStringProvider' )]
 	public function testNewFromStringThrowsExceptionWhenStringIsTooLong( string $string ): void {
 		$this->expectException( InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Number is too big' );
@@ -315,9 +309,7 @@ class EuroTest extends TestCase {
 		$this->assertTrue( true );
 	}
 
-	/**
-	 * @dataProvider tooHighNumberProvider
-	 */
+	#[DataProvider( 'tooHighNumberProvider' )]
 	public function testNewFromIntThrowsExceptionWhenIntegerIsTooHigh( int $int ): void {
 		$this->expectException( InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Number is too big' );
@@ -333,9 +325,7 @@ class EuroTest extends TestCase {
 		yield [ (int)floor( PHP_INT_MAX / 100 ) ];
 	}
 
-	/**
-	 * @dataProvider tooHighNumberProvider
-	 */
+	#[DataProvider( 'tooHighNumberProvider' )]
 	public function testNewFromFloatThrowsExceptionWhenFloatIsTooHigh( int $int ): void {
 		$this->expectException( InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Number is too big' );
