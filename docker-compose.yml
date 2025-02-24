@@ -1,0 +1,6 @@
+services:
+  app:
+    image: "registry.gitlab.com/fun-tech/fundraising-frontend-docker:latest"
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
