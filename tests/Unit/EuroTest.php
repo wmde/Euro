@@ -31,28 +31,23 @@ class EuroTest extends TestCase {
 
 	public function testGivenZero_getEuroFloatReturnsZeroFloat(): void {
 		$amount = Euro::newFromCents( 0 );
-		$this->assertExactFloat( 0.0, $amount->getEuroFloat() );
+		$this->assertSame( 0.0, $amount->getEuroFloat() );
 		$this->assertNotSame( 0, $amount->getEuroFloat() );
-	}
-
-	private function assertExactFloat( $expected, $actual ): void {
-		$this->assertIsFloat( $actual );
-		$this->assertEquals( $expected, $actual, '', 0 );
 	}
 
 	public function testGivenOneEuro_getEuroFloatReturnsOne(): void {
 		$amount = Euro::newFromCents( 100 );
-		$this->assertExactFloat( 1.0, $amount->getEuroFloat() );
+		$this->assertSame( 1.0, $amount->getEuroFloat() );
 	}
 
 	public function testGivenOneCent_getEuroFloatReturnsPointZeroOne(): void {
 		$amount = Euro::newFromCents( 1 );
-		$this->assertExactFloat( 0.01, $amount->getEuroFloat() );
+		$this->assertSame( 0.01, $amount->getEuroFloat() );
 	}
 
 	public function testGiven33cents_getEuroFloatReturnsPointThreeThree(): void {
 		$amount = Euro::newFromCents( 33 );
-		$this->assertExactFloat( 0.33, $amount->getEuroFloat() );
+		$this->assertSame( 0.33, $amount->getEuroFloat() );
 	}
 
 	#[DataProvider( 'getEurosDataProvider' )]
@@ -156,7 +151,7 @@ class EuroTest extends TestCase {
 		$this->assertSame( 3133742, Euro::newFromString( '31337.42' )->getEuroCents() );
 	}
 
-	public function testEuroStringThatCausedRoundingError_doesNotCauseRoundingError() {
+	public function testEuroStringThatCausedRoundingError_doesNotCauseRoundingError(): void {
 		// Regression test for https://phabricator.wikimedia.org/T183481
 		$this->assertSame( 870, Euro::newFromString( '8.70' )->getEuroCents() );
 		$this->assertSame( 920, Euro::newFromString( '9.20' )->getEuroCents() );
@@ -301,12 +296,14 @@ class EuroTest extends TestCase {
 	public static function tooLongStringProvider(): iterable {
 		yield [ '1111111111111111111111111111111' ];
 		yield [ (string)PHP_INT_MAX ];
+		// This large number will be interpreted as a Euro value, which will then be too large to be stored as a Cent value
 		yield [ substr( (string)PHP_INT_MAX, 0, -2 ) ];
 	}
 
-	public function testNewFromStringHandlesLongStrings(): void {
+	public function testNewFromStringHandlesLongStringsWithoutExcpection(): void {
+		// The test ensures that Euro does not throw an exception when getting a large, but not too large number.
+		$this->expectNotToPerformAssertions();
 		Euro::newFromString( substr( (string)PHP_INT_MAX, 0, -3 ) );
-		$this->assertTrue( true );
 	}
 
 	#[DataProvider( 'tooHighNumberProvider' )]
