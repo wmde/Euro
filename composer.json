@@ -4,7 +4,7 @@
 	"homepage": "https://github.com/wmde/Euro",
 	"license": "GPL-2.0-or-later",
 	"require": {
-		"php": ">=8.1",
+		"php": ">=8.4",
 		"ext-json": "*"
 	},
 	"require-dev": {
